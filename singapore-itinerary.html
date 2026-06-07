@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>新加坡四天三夜行程表</title>
+  <style>
+    :root {
+      --ink: #172126;
+      --muted: #66747c;
+      --line: #d9e1e5;
+      --panel: #ffffff;
+      --wash: #f5f7f4;
+      --blue: #0f6d8c;
+      --green: #2d7d63;
+      --coral: #c9543b;
+      --gold: #b9821d;
+      --purple: #6a5b93;
+      --shadow: 0 10px 24px rgba(23, 33, 38, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--wash);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(245, 247, 244, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 14px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .icon-button,
+    .day-tab,
+    .filter-chip {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      min-height: 38px;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .icon-button {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon {
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+    }
+
+    .layout {
+      width: min(1180px, calc(100% - 32px));
+      margin: 22px auto 44px;
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .sidebar {
+      display: grid;
+      gap: 14px;
+      position: sticky;
+      top: 98px;
+    }
+
+    .panel,
+    .place-card,
+    .event {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .panel h2,
+    .section-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .panel h3 {
+      margin: 16px 0 8px;
+      font-size: 15px;
+    }
+
+    .trip-photo {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .trip-photo img {
+      width: 100%;
+      height: 176px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .caption {
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .flight-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .flight-row {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f7fafb;
+      border: 1px solid #e5ecef;
+    }
+
+    .flight-row strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .flight-row span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      padding: 10px;
+      background: #f7fafb;
+      border: 1px solid #e5ecef;
+      border-radius: 8px;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 18px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .day-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .day-tab[aria-selected="true"],
+    .filter-chip.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .main {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-strip {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+    }
+
+    .hero-card {
+      min-height: 220px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #203139;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 220px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .hero-copy {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 22px;
+      color: #fff;
+      background: linear-gradient(0deg, rgba(15, 29, 34, 0.82), rgba(15, 29, 34, 0));
+    }
+
+    .hero-copy h2 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 52ch;
+    }
+
+    .quick-notes {
+      display: grid;
+      gap: 10px;
+    }
+
+    .note {
+      padding: 13px 14px;
+      border-left: 4px solid var(--gold);
+      background: var(--panel);
+      border-radius: 8px;
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .note span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .day {
+      display: grid;
+      gap: 10px;
+      scroll-margin-top: 112px;
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #eaf1ee;
+      border: 1px solid #cddbd4;
+    }
+
+    .day-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .day-header span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .events {
+      display: grid;
+      gap: 10px;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 12px;
+      padding: 13px;
+      box-shadow: none;
+    }
+
+    .time {
+      color: var(--blue);
+      font-weight: 750;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .event h4 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .event p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #fff;
+      background: var(--green);
+    }
+
+    .tag.food { background: var(--coral); }
+    .tag.sight { background: var(--blue); }
+    .tag.hotel { background: var(--purple); }
+    .tag.flight { background: var(--gold); }
+    .tag.buffer { background: #63717a; }
+
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .place-card {
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .place-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      background: #dfe8ea;
+    }
+
+    .place-card div {
+      padding: 12px;
+    }
+
+    .place-card h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    .place-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .summary-list {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .summary-list li {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .dot.food { background: var(--coral); }
+    .dot.flight { background: var(--gold); }
+    .dot.hotel { background: var(--purple); }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .hero-strip,
+      .places-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar-inner,
+      .layout {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .event {
+        grid-template-columns: 1fr;
+      }
+
+      .time {
+        font-size: 14px;
+      }
+
+      .hero-copy h2 {
+        font-size: 24px;
+      }
+
+      .brand h1 {
+        font-size: 27px;
+      }
+
+      .day-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .actions,
+      .day-nav,
+      .filters {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .layout {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+
+      .sidebar,
+      .hero-strip,
+      .places-grid {
+        page-break-inside: avoid;
+      }
+
+      .panel,
+      .event,
+      .place-card,
+      .hero-card {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <h1>新加坡四天三夜行程表</h1>
+          <p>2026/06/19 - 2026/06/22 · BR215 / BR216 · 旅行社經典路線＋你的收藏餐廳</p>
+        </div>
+        <div class="actions">
+          <button class="icon-button" type="button" id="printBtn" title="列印或輸出 PDF">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v7H7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            列印
+          </button>
+          <button class="icon-button" type="button" id="compactBtn" title="切換精簡顯示">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            精簡
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar" aria-label="行程摘要">
+        <section class="panel trip-photo">
+          <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=900&q=80" alt="新加坡濱海灣天際線">
+          <div class="caption">主軸：濱海灣、市區文化區、夜間野生動物園、樟宜機場。</div>
+        </section>
+
+        <section class="panel">
+          <h2>航班</h2>
+          <div class="flight-card">
+            <div class="flight-row">
+              <strong>去程</strong>
+              <span>6/19 09:25 TPE → 13:55 SIN<br>BR215</span>
+            </div>
+            <div class="flight-row">
+              <strong>回程</strong>
+              <span>6/22 15:20 SIN → 20:00 TPE<br>BR216</span>
+            </div>
+          </div>
+          <div class="meta-grid">
+            <div class="metric"><b>4 天</b><span>實際可玩約 2.5 天</span></div>
+            <div class="metric"><b>12 點</b><span>景點/餐廳/機場節點</span></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>快速跳轉</h2>
+          <nav class="day-nav" aria-label="日期">
+            <button class="day-tab" type="button" data-target="day1" aria-selected="true">第 1 天</button>
+            <button class="day-tab" type="button" data-target="day2" aria-selected="false">第 2 天</button>
+            <button class="day-tab" type="button" data-target="day3" aria-selected="false">第 3 天</button>
+            <button class="day-tab" type="button" data-target="day4" aria-selected="false">第 4 天</button>
+          </nav>
+        </section>
+
+        <section class="panel">
+          <h2>票券與提醒</h2>
+          <ul class="summary-list">
+            <li><span class="dot flight"></span><span>夜間野生動物園建議預先購票，週末晚上彈性較少。</span></li>
+            <li><span class="dot"></span><span>濱海灣花園可先確認 Cloud Forest / Flower Dome 維護日。</span></li>
+            <li><span class="dot food"></span><span>Song Fa 11:00 開始營業，適合 6/22 早午餐。</span></li>
+            <li><span class="dot hotel"></span><span>6/22 建議 12:30 前往機場，回程 15:20。</span></li>
+          </ul>
+        </section>
+      </aside>
+
+      <section class="main">
+        <div class="hero-strip">
+          <section class="hero-card" aria-label="行程主視覺">
+            <img src="https://images.unsplash.com/photo-1508964942454-1a56651d54ac?auto=format&fit=crop&w=1200&q=80" alt="新加坡濱海灣夜景">
+            <div class="hero-copy">
+              <h2>輕鬆但不空泛</h2>
+              <p>保留自由行的彈性，把旅行社常見的市區經典、濱海灣與動物園路線整理成一趟順路行程。</p>
+            </div>
+          </section>
+
+          <section class="quick-notes" aria-label="重點提醒">
+            <div class="note">
+              <strong>不排環球影城</strong>
+              <span>四天三夜實際時間偏短，環球會壓縮你收藏的餐廳與濱海灣。</span>
+            </div>
+            <div class="note">
+              <strong>第 4 天已換線</strong>
+              <span>移除公休的歐南園亞華肉骨茶，改成 Chinatown、佛牙寺、Song Fa。</span>
+            </div>
+            <div class="note">
+              <strong>去趣時間</strong>
+              <span>App 會自動排預設時間，本表提供較合理的實際參考時間。</span>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="section-title">
+            <div>
+              <h2>行程時間軸</h2>
+              <p>按用途篩選或直接捲動查看每日安排。</p>
+            </div>
+          </div>
+          <div class="filters" aria-label="篩選">
+            <button class="filter-chip active" type="button" data-filter="all">全部</button>
+            <button class="filter-chip" type="button" data-filter="sight">景點</button>
+            <button class="filter-chip" type="button" data-filter="food">餐飲</button>
+            <button class="filter-chip" type="button" data-filter="flight">交通</button>
+          </div>
+
+          <div class="timeline">
+            <article class="day" id="day1">
+              <div class="day-header">
+                <h3>第 1 天 · 6/19 週五</h3>
+                <span>抵達、Jewel、市區夜景</span>
+              </div>
+              <div class="events">
+                <div class="event" data-kind="flight"><div class="time">13:55</div><div><h4>抵達新加坡 SIN</h4><p>BR215 抵達後，先保留入境與行李時間。</p><div class="tags"><span class="tag flight">交通</span><span class="tag buffer">緩衝</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">15:00</div><div><h4>Jewel Changi Airport / Rain Vortex</h4><p>抵達後先看星耀樟宜與雨漩渦，適合當作第一站。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
+                <div class="event" data-kind="hotel"><div class="time">16:30</div><div><h4>lyf Funan Singapore</h4><p>前往住宿點放行李，休息一下再出門。</p><div class="tags"><span class="tag hotel">住宿</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">18:00</div><div><h4>魚尾獅公園、濱海灣夜景</h4><p>經典市區路線，適合第一晚散步拍照。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
+                <div class="event" data-kind="food"><div class="time">19:30</div><div><h4>老巴剎晚餐</h4><p>旅行社常見會排市區夜景，你的版本加上小販中心晚餐。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">20:45</div><div><h4>Supertree 燈光秀備選</h4><p>體力還夠再加碼，不夠就回飯店。</p><div class="tags"><span class="tag sight">景點</span><span class="tag buffer">可選</span></div></div></div>
+              </div>
+            </article>
+
+            <article class="day" id="day2">
+              <div class="day-header">
+                <h3>第 2 天 · 6/20 週六</h3>
+                <span>文化區、肉骨茶、烏節購物</span>
+              </div>
+              <div class="events">
+                <div class="event" data-kind="sight"><div class="time">10:00</div><div><h4>小印度藝術區</h4><p>補上旅行社半日市區遊常見的文化區元素。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
+                <div class="event" data-kind="food"><div class="time">12:00</div><div><h4>Founder Bak Kut Teh</h4><p>你的收藏餐廳，作為午餐主軸。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">14:00</div><div><h4>愛雍烏節 / Orchard Road</h4><p>下午安排購物與市區散步，不把行程塞滿。</p><div class="tags"><span class="tag sight">購物</span></div></div></div>
+                <div class="event" data-kind="food"><div class="time">17:30</div><div><h4>noci</h4><p>義大利餐廳，建議訂位或先確認營業時間。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">19:30</div><div><h4>克拉碼頭或濱海灣散步</h4><p>晚餐後的低壓收尾，視體力決定。</p><div class="tags"><span class="tag sight">可選</span></div></div></div>
+              </div>
+            </article>
+
+            <article class="day" id="day3">
+              <div class="day-header">
+                <h3>第 3 天 · 6/21 週日</h3>
+                <span>濱海灣花園、夜間野生動物園</span>
+              </div>
+              <div class="events">
+                <div class="event" data-kind="sight"><div class="time">10:00</div><div><h4>濱海灣花園：Cloud Forest / Flower Dome</h4><p>旅行社最常放進新加坡 4 天產品的核心景點。</p><div class="tags"><span class="tag sight">景點</span><span class="tag flight">需票券</span></div></div></div>
+                <div class="event" data-kind="food"><div class="time">13:30</div><div><h4>Satay by the Bay 或園區午餐</h4><p>留在園區附近吃飯，避免交通來回拉扯。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
+                <div class="event" data-kind="hotel"><div class="time">15:00</div><div><h4>回飯店休息</h4><p>夜間野生動物園會晚結束，中間補體力很重要。</p><div class="tags"><span class="tag buffer">緩衝</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">18:30</div><div><h4>夜間野生動物園</h4><p>建議預先購票，晚餐可在園區或出發前簡單吃。</p><div class="tags"><span class="tag sight">景點</span><span class="tag flight">需票券</span></div></div></div>
+              </div>
+            </article>
+
+            <article class="day" id="day4">
+              <div class="day-header">
+                <h3>第 4 天 · 6/22 週一</h3>
+                <span>牛車水早午餐、回程</span>
+              </div>
+              <div class="events">
+                <div class="event" data-kind="sight"><div class="time">09:30</div><div><h4>Chinatown</h4><p>最後一天排短路線，接近市區且容易控制時間。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">10:15</div><div><h4>新加坡佛牙寺龍華院</h4><p>牛車水代表景點，和 Chinatown 可步行串接。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
+                <div class="event" data-kind="food"><div class="time">11:00</div><div><h4>Song Fa Bak Kut Teh Chinatown Point</h4><p>取代週一公休的歐南園亞華肉骨茶。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
+                <div class="event" data-kind="flight"><div class="time">12:30</div><div><h4>前往新加坡樟宜國際機場</h4><p>回程 BR216 15:20，建議保留報到與安檢時間。</p><div class="tags"><span class="tag flight">交通</span></div></div></div>
+                <div class="event" data-kind="flight"><div class="time">15:20</div><div><h4>BR216 SIN → TPE</h4><p>20:00 抵達台北。</p><div class="tags"><span class="tag flight">航班</span></div></div></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-title">
+            <div>
+              <h2>重點地點</h2>
+              <p>放在去趣裡的主要景點與餐廳。</p>
+            </div>
+          </div>
+          <div class="places-grid">
+            <article class="place-card">
+              <img src="https://images.unsplash.com/photo-1565881606991-789a8dff9dbb?auto=format&fit=crop&w=700&q=80" alt="新加坡濱海灣花園">
+              <div><h3>濱海灣花園</h3><p>第 3 天主行程，建議預購館區票券。</p></div>
+            </article>
+            <article class="place-card">
+              <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=700&q=80" alt="新加坡市區街景">
+              <div><h3>Chinatown / 佛牙寺</h3><p>第 4 天短線文化區，方便接回機場。</p></div>
+            </article>
+            <article class="place-card">
+              <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=700&q=80" alt="亞洲小吃與餐桌">
+              <div><h3>肉骨茶與小販中心</h3><p>Founder、老巴剎、Song Fa 保留美食彈性。</p></div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const dayTabs = document.querySelectorAll(".day-tab");
+    const filterButtons = document.querySelectorAll(".filter-chip");
+    const events = document.querySelectorAll(".event");
+    const compactBtn = document.getElementById("compactBtn");
+
+    dayTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        dayTabs.forEach((item) => item.setAttribute("aria-selected", "false"));
+        tab.setAttribute("aria-selected", "true");
+        document.getElementById(tab.dataset.target).scrollIntoView({ block: "start" });
+      });
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        events.forEach((event) => {
+          event.hidden = filter !== "all" && event.dataset.kind !== filter;
+        });
+      });
+    });
+
+    compactBtn.addEventListener("click", () => {
+      document.body.classList.toggle("compact");
+      document.querySelectorAll(".event p, .tags").forEach((node) => {
+        node.hidden = document.body.classList.contains("compact");
+      });
+    });
+
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+  </script>
+</body>
+</html>
