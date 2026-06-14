@@ -404,6 +404,25 @@
     .tag.flight { background: var(--gold); }
     .tag.buffer { background: #63717a; }
 
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .map-link:hover {
+      border-color: var(--blue);
+      background: #eef8fb;
+    }
+
     .places-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -430,6 +449,16 @@
     .place-card h3 {
       margin: 0 0 4px;
       font-size: 15px;
+    }
+
+    .place-card h3 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .place-card h3 a:hover {
+      color: var(--blue);
+      text-decoration: underline;
     }
 
     .place-card p {
@@ -672,11 +701,11 @@
               </div>
               <div class="events">
                 <div class="event" data-kind="flight"><div class="time">13:55</div><div><h4>抵達新加坡 SIN</h4><p>BR215 抵達後，先保留入境與行李時間。</p><div class="tags"><span class="tag flight">交通</span><span class="tag buffer">緩衝</span></div></div></div>
-                <div class="event" data-kind="sight"><div class="time">15:00</div><div><h4>Jewel Changi Airport / Rain Vortex</h4><p>抵達後先看星耀樟宜與雨漩渦，適合當作第一站。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
-                <div class="event" data-kind="hotel"><div class="time">16:30</div><div><h4>lyf Funan Singapore</h4><p>前往住宿點放行李，休息一下再出門。</p><div class="tags"><span class="tag hotel">住宿</span></div></div></div>
-                <div class="event" data-kind="sight"><div class="time">18:00</div><div><h4>魚尾獅公園、濱海灣夜景</h4><p>經典市區路線，適合第一晚散步拍照。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
-                <div class="event" data-kind="food"><div class="time">19:30</div><div><h4>老巴剎晚餐</h4><p>旅行社常見會排市區夜景，你的版本加上小販中心晚餐。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
-                <div class="event" data-kind="sight"><div class="time">20:45</div><div><h4>Supertree 燈光秀備選</h4><p>體力還夠再加碼，不夠就回飯店。</p><div class="tags"><span class="tag sight">景點</span><span class="tag buffer">可選</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">15:00</div><div><h4>Jewel Changi Airport / Rain Vortex</h4><p>抵達後先看星耀樟宜與雨漩渦，適合當作第一站。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Jewel%20Changi%20Airport%20Singapore" target="_blank" rel="noopener">Jewel 地圖</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Jewel%20Rain%20Vortex%20Singapore" target="_blank" rel="noopener">Rain Vortex 地圖</a></div></div></div>
+                <div class="event" data-kind="hotel"><div class="time">16:30</div><div><h4>lyf Funan Singapore</h4><p>前往住宿點放行李，休息一下再出門。</p><div class="tags"><span class="tag hotel">住宿</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=lyf%20Funan%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">18:00</div><div><h4>魚尾獅公園、濱海灣夜景</h4><p>經典市區路線，適合第一晚散步拍照。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Merlion%20Park%20Singapore" target="_blank" rel="noopener">魚尾獅地圖</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Marina%20Bay%20Singapore" target="_blank" rel="noopener">濱海灣地圖</a></div></div></div>
+                <div class="event" data-kind="food"><div class="time">19:30</div><div><h4>老巴剎晚餐</h4><p>旅行社常見會排市區夜景，你的版本加上小販中心晚餐。</p><div class="tags"><span class="tag food">餐飲</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Lau%20Pa%20Sat%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">20:45</div><div><h4>Supertree 燈光秀備選</h4><p>體力還夠再加碼，不夠就回飯店。</p><div class="tags"><span class="tag sight">景點</span><span class="tag buffer">可選</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Supertree%20Grove%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
               </div>
             </article>
 
@@ -686,11 +715,11 @@
                 <span>文化區、肉骨茶、烏節購物</span>
               </div>
               <div class="events">
-                <div class="event" data-kind="sight"><div class="time">10:00</div><div><h4>小印度藝術區</h4><p>補上旅行社半日市區遊常見的文化區元素。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
-                <div class="event" data-kind="food"><div class="time">12:00</div><div><h4>Founder Bak Kut Teh</h4><p>你的收藏餐廳，作為午餐主軸。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
-                <div class="event" data-kind="sight"><div class="time">14:00</div><div><h4>愛雍烏節 / Orchard Road</h4><p>下午安排購物與市區散步，不把行程塞滿。</p><div class="tags"><span class="tag sight">購物</span></div></div></div>
-                <div class="event" data-kind="food"><div class="time">17:30</div><div><h4>noci</h4><p>義大利餐廳，建議訂位或先確認營業時間。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
-                <div class="event" data-kind="sight"><div class="time">19:30</div><div><h4>克拉碼頭或濱海灣散步</h4><p>晚餐後的低壓收尾，視體力決定。</p><div class="tags"><span class="tag sight">可選</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">10:00</div><div><h4>小印度藝術區</h4><p>補上旅行社半日市區遊常見的文化區元素。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Little%20India%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="food"><div class="time">12:00</div><div><h4>Founder Bak Kut Teh</h4><p>你的收藏餐廳，作為午餐主軸。</p><div class="tags"><span class="tag food">餐飲</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Founder%20Bak%20Kut%20Teh%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">14:00</div><div><h4>愛雍烏節 / Orchard Road</h4><p>下午安排購物與市區散步，不把行程塞滿。</p><div class="tags"><span class="tag sight">購物</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=ION%20Orchard%20Singapore" target="_blank" rel="noopener">愛雍地圖</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Orchard%20Road%20Singapore" target="_blank" rel="noopener">烏節路地圖</a></div></div></div>
+                <div class="event" data-kind="food"><div class="time">17:30</div><div><h4>noci</h4><p>義大利餐廳，建議訂位或先確認營業時間。</p><div class="tags"><span class="tag food">餐飲</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=noci%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">19:30</div><div><h4>克拉碼頭或濱海灣散步</h4><p>晚餐後的低壓收尾，視體力決定。</p><div class="tags"><span class="tag sight">可選</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Clarke%20Quay%20Singapore" target="_blank" rel="noopener">克拉碼頭地圖</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Marina%20Bay%20Singapore" target="_blank" rel="noopener">濱海灣地圖</a></div></div></div>
               </div>
             </article>
 
@@ -700,10 +729,10 @@
                 <span>濱海灣花園、夜間野生動物園</span>
               </div>
               <div class="events">
-                <div class="event" data-kind="sight"><div class="time">10:00</div><div><h4>濱海灣花園：Cloud Forest / Flower Dome</h4><p>旅行社最常放進新加坡 4 天產品的核心景點。</p><div class="tags"><span class="tag sight">景點</span><span class="tag flight">需票券</span></div></div></div>
-                <div class="event" data-kind="food"><div class="time">13:30</div><div><h4>Satay by the Bay 或園區午餐</h4><p>留在園區附近吃飯，避免交通來回拉扯。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">10:00</div><div><h4>濱海灣花園：Cloud Forest / Flower Dome</h4><p>旅行社最常放進新加坡 4 天產品的核心景點。</p><div class="tags"><span class="tag sight">景點</span><span class="tag flight">需票券</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Gardens%20by%20the%20Bay%20Singapore" target="_blank" rel="noopener">花園地圖</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Cloud%20Forest%20Singapore" target="_blank" rel="noopener">Cloud Forest</a><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Flower%20Dome%20Singapore" target="_blank" rel="noopener">Flower Dome</a></div></div></div>
+                <div class="event" data-kind="food"><div class="time">13:30</div><div><h4>Satay by the Bay 或園區午餐</h4><p>留在園區附近吃飯，避免交通來回拉扯。</p><div class="tags"><span class="tag food">餐飲</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Satay%20by%20the%20Bay%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
                 <div class="event" data-kind="hotel"><div class="time">15:00</div><div><h4>回飯店休息</h4><p>夜間野生動物園會晚結束，中間補體力很重要。</p><div class="tags"><span class="tag buffer">緩衝</span></div></div></div>
-                <div class="event" data-kind="sight"><div class="time">18:30</div><div><h4>夜間野生動物園</h4><p>建議預先購票，晚餐可在園區或出發前簡單吃。</p><div class="tags"><span class="tag sight">景點</span><span class="tag flight">需票券</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">18:30</div><div><h4>夜間野生動物園</h4><p>建議預先購票，晚餐可在園區或出發前簡單吃。</p><div class="tags"><span class="tag sight">景點</span><span class="tag flight">需票券</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Night%20Safari%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
               </div>
             </article>
 
@@ -713,10 +742,10 @@
                 <span>牛車水早午餐、回程</span>
               </div>
               <div class="events">
-                <div class="event" data-kind="sight"><div class="time">09:30</div><div><h4>Chinatown</h4><p>最後一天排短路線，接近市區且容易控制時間。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
-                <div class="event" data-kind="sight"><div class="time">10:15</div><div><h4>新加坡佛牙寺龍華院</h4><p>牛車水代表景點，和 Chinatown 可步行串接。</p><div class="tags"><span class="tag sight">景點</span></div></div></div>
-                <div class="event" data-kind="food"><div class="time">11:00</div><div><h4>Song Fa Bak Kut Teh Chinatown Point</h4><p>取代週一公休的歐南園亞華肉骨茶。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div>
-                <div class="event" data-kind="flight"><div class="time">12:30</div><div><h4>前往新加坡樟宜國際機場</h4><p>回程 BR216 15:20，建議保留報到與安檢時間。</p><div class="tags"><span class="tag flight">交通</span></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">09:30</div><div><h4>Chinatown</h4><p>最後一天排短路線，接近市區且容易控制時間。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Chinatown%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="sight"><div class="time">10:15</div><div><h4>新加坡佛牙寺龍華院</h4><p>牛車水代表景點，和 Chinatown 可步行串接。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Buddha%20Tooth%20Relic%20Temple%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="food"><div class="time">11:00</div><div><h4>Song Fa Bak Kut Teh Chinatown Point</h4><p>取代週一公休的歐南園亞華肉骨茶。</p><div class="tags"><span class="tag food">餐飲</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Song%20Fa%20Bak%20Kut%20Teh%20Chinatown%20Point%20Singapore" target="_blank" rel="noopener">Google Maps</a></div></div></div>
+                <div class="event" data-kind="flight"><div class="time">12:30</div><div><h4>前往新加坡樟宜國際機場</h4><p>回程 BR216 15:20，建議保留報到與安檢時間。</p><div class="tags"><span class="tag flight">交通</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Singapore%20Changi%20Airport" target="_blank" rel="noopener">Google Maps</a></div></div></div>
                 <div class="event" data-kind="flight"><div class="time">15:20</div><div><h4>BR216 SIN → TPE</h4><p>20:00 抵達台北。</p><div class="tags"><span class="tag flight">航班</span></div></div></div>
               </div>
             </article>
@@ -733,15 +762,15 @@
           <div class="places-grid">
             <article class="place-card">
               <img src="https://images.unsplash.com/photo-1565881606991-789a8dff9dbb?auto=format&fit=crop&w=700&q=80" alt="新加坡濱海灣花園">
-              <div><h3>濱海灣花園</h3><p>第 3 天主行程，建議預購館區票券。</p></div>
+              <div><h3><a href="https://www.google.com/maps/search/?api=1&query=Gardens%20by%20the%20Bay%20Singapore" target="_blank" rel="noopener">濱海灣花園</a></h3><p>第 3 天主行程，建議預購館區票券。</p></div>
             </article>
             <article class="place-card">
               <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=700&q=80" alt="新加坡市區街景">
-              <div><h3>Chinatown / 佛牙寺</h3><p>第 4 天短線文化區，方便接回機場。</p></div>
+              <div><h3><a href="https://www.google.com/maps/search/?api=1&query=Chinatown%20Buddha%20Tooth%20Relic%20Temple%20Singapore" target="_blank" rel="noopener">Chinatown / 佛牙寺</a></h3><p>第 4 天短線文化區，方便接回機場。</p></div>
             </article>
             <article class="place-card">
               <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=700&q=80" alt="亞洲小吃與餐桌">
-              <div><h3>肉骨茶與小販中心</h3><p>Founder、老巴剎、Song Fa 保留美食彈性。</p></div>
+              <div><h3><a href="https://www.google.com/maps/search/?api=1&query=Founder%20Bak%20Kut%20Teh%20Lau%20Pa%20Sat%20Song%20Fa%20Singapore" target="_blank" rel="noopener">肉骨茶與小販中心</a></h3><p>Founder、老巴剎、Song Fa 保留美食彈性。</p></div>
             </article>
           </div>
         </section>
