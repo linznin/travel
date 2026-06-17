@@ -520,6 +520,17 @@
         grid-template-columns: 1fr;
       }
 
+      .hero-card {
+        min-height: 0;
+        max-height: 176px;
+      }
+
+      .hero-card img {
+        height: 176px;
+        min-height: 0;
+        max-height: 176px;
+      }
+
       .topbar-inner {
         grid-template-columns: 1fr;
       }
@@ -535,6 +546,24 @@
         width: min(100% - 20px, 1180px);
       }
 
+      .layout {
+        margin: 14px auto 28px;
+        gap: 14px;
+      }
+
+      .main,
+      .sidebar {
+        gap: 12px;
+      }
+
+      .hero-strip {
+        gap: 10px;
+      }
+
+      .hero-copy {
+        padding: 14px;
+      }
+
       .event {
         grid-template-columns: 1fr;
       }
@@ -544,7 +573,25 @@
       }
 
       .hero-copy h2 {
-        font-size: 24px;
+        margin-bottom: 3px;
+        font-size: 22px;
+      }
+
+      .hero-copy p {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .quick-notes {
+        gap: 8px;
+      }
+
+      .note {
+        padding: 10px 12px;
+      }
+
+      .note span {
+        font-size: 13px;
       }
 
       .brand h1 {
@@ -579,6 +626,49 @@
       .hero-strip,
       .places-grid {
         page-break-inside: avoid;
+      }
+
+      .hero-strip {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .hero-card {
+        min-height: 0;
+        max-height: 176px;
+      }
+
+      .hero-card img {
+        height: 176px;
+        min-height: 0;
+        max-height: 176px;
+      }
+
+      .hero-copy {
+        padding: 14px;
+      }
+
+      .hero-copy h2 {
+        margin-bottom: 3px;
+        font-size: 22px;
+      }
+
+      .hero-copy p {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .quick-notes {
+        gap: 8px;
+      }
+
+      .note {
+        padding: 10px 12px;
+      }
+
+      .note span {
+        font-size: 13px;
       }
 
       .panel,
