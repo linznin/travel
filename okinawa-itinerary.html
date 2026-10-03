@@ -1,0 +1,700 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>沖繩五天四夜行程表</title><style>
+    :root {
+      --ink: #172126;
+      --muted: #66747c;
+      --line: #d9e1e5;
+      --panel: #ffffff;
+      --wash: #f5f7f4;
+      --blue: #0f6d8c;
+      --green: #2d7d63;
+      --coral: #c9543b;
+      --gold: #b9821d;
+      --purple: #6a5b93;
+      --shadow: 0 10px 24px rgba(23, 33, 38, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--wash);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(245, 247, 244, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 14px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .icon-button,
+    .day-tab,
+    .filter-chip {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      min-height: 38px;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .icon-button {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon {
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+    }
+
+    .layout {
+      width: min(1180px, calc(100% - 32px));
+      margin: 22px auto 44px;
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .sidebar {
+      display: grid;
+      gap: 14px;
+      position: sticky;
+      top: 98px;
+    }
+
+    .panel,
+    .place-card,
+    .event {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .panel h2,
+    .section-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .panel h3 {
+      margin: 16px 0 8px;
+      font-size: 15px;
+    }
+
+    .trip-photo {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .trip-photo img {
+      width: 100%;
+      height: 176px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .caption {
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .flight-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .flight-row {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #f7fafb;
+      border: 1px solid #e5ecef;
+    }
+
+    .flight-row strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .flight-row span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      padding: 10px;
+      background: #f7fafb;
+      border: 1px solid #e5ecef;
+      border-radius: 8px;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 18px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .day-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .day-tab[aria-selected="true"],
+    .filter-chip.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .main {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-strip {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+    }
+
+    .hero-card {
+      min-height: 220px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #203139;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 220px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .hero-copy {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 22px;
+      color: #fff;
+      background: linear-gradient(0deg, rgba(15, 29, 34, 0.82), rgba(15, 29, 34, 0));
+    }
+
+    .hero-copy h2 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 52ch;
+    }
+
+    .quick-notes {
+      display: grid;
+      gap: 10px;
+    }
+
+    .note {
+      padding: 13px 14px;
+      border-left: 4px solid var(--gold);
+      background: var(--panel);
+      border-radius: 8px;
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .note span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .section-title p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .day {
+      display: grid;
+      gap: 10px;
+      scroll-margin-top: 112px;
+    }
+
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #eaf1ee;
+      border: 1px solid #cddbd4;
+    }
+
+    .day-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .day-header span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .events {
+      display: grid;
+      gap: 10px;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 12px;
+      padding: 13px;
+      box-shadow: none;
+    }
+
+    .time {
+      color: var(--blue);
+      font-weight: 750;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .event h4 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .event p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #fff;
+      background: var(--green);
+    }
+
+    .tag.food { background: var(--coral); }
+    .tag.sight { background: var(--blue); }
+    .tag.hotel { background: var(--purple); }
+    .tag.flight { background: var(--gold); }
+    .tag.buffer { background: #63717a; }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .map-link:hover {
+      border-color: var(--blue);
+      background: #eef8fb;
+    }
+
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .place-card {
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .place-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      background: #dfe8ea;
+    }
+
+    .place-card > div {
+      padding: 12px;
+    }
+
+    .place-card h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    .place-card h3 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .place-card h3 a:hover {
+      color: var(--blue);
+      text-decoration: underline;
+    }
+
+    .place-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .place-card .tags {
+      margin-top: 10px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .summary-list {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .summary-list li {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .dot.food { background: var(--coral); }
+    .dot.flight { background: var(--gold); }
+    .dot.hotel { background: var(--purple); }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .hero-strip,
+      .places-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        min-height: 0;
+        max-height: 176px;
+      }
+
+      .hero-card img {
+        height: 176px;
+        min-height: 0;
+        max-height: 176px;
+      }
+
+      .topbar-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar-inner,
+      .layout {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .layout {
+        margin: 14px auto 28px;
+        gap: 14px;
+      }
+
+      .main,
+      .sidebar {
+        gap: 12px;
+      }
+
+      .hero-strip {
+        gap: 10px;
+      }
+
+      .hero-copy {
+        padding: 14px;
+      }
+
+      .event {
+        grid-template-columns: 1fr;
+      }
+
+      .time {
+        font-size: 14px;
+      }
+
+      .hero-copy h2 {
+        margin-bottom: 3px;
+        font-size: 22px;
+      }
+
+      .hero-copy p {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .quick-notes {
+        gap: 8px;
+      }
+
+      .note {
+        padding: 10px 12px;
+      }
+
+      .note span {
+        font-size: 13px;
+      }
+
+      .brand h1 {
+        font-size: 27px;
+      }
+
+      .day-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .actions,
+      .day-nav,
+      .filters {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .layout {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+
+      .sidebar,
+      .hero-strip,
+      .places-grid {
+        page-break-inside: avoid;
+      }
+
+      .hero-strip {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .hero-card {
+        min-height: 0;
+        max-height: 176px;
+      }
+
+      .hero-card img {
+        height: 176px;
+        min-height: 0;
+        max-height: 176px;
+      }
+
+      .hero-copy {
+        padding: 14px;
+      }
+
+      .hero-copy h2 {
+        margin-bottom: 3px;
+        font-size: 22px;
+      }
+
+      .hero-copy p {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .quick-notes {
+        gap: 8px;
+      }
+
+      .note {
+        padding: 10px 12px;
+      }
+
+      .note span {
+        font-size: 13px;
+      }
+
+      .panel,
+      .event,
+      .place-card,
+      .hero-card {
+        box-shadow: none;
+      }
+    }
+  
+[hidden] { display: none !important; }
+.event { grid-template-columns: 126px minmax(0, 1fr); }
+.sidebar { position: static; }
+a { color: var(--blue); }
+.ocean { padding: 28px; border-radius: 8px; background: linear-gradient(130deg,#084b65,#178d94); color: white; }
+.ocean h2 { font-size: 32px; margin: 8px 0; }
+.ocean p { margin: 8px 0; }
+.warning { border-left: 4px solid var(--gold); }
+@media(max-width:560px) { .event { grid-template-columns:1fr; } .day { scroll-margin-top:190px; } }
+@media print { .event[hidden], .event p[hidden], .tags[hidden] { display: block !important; } .day { break-inside:auto; } .event { break-inside:avoid; } }
+</style></head><body><div class="app">
+<header class="topbar"><div class="topbar-inner"><div class="brand"><h1>沖繩五天四夜行程表</h1><p>2026/10/28 – 11/1 · 那霸單點住宿 · 完全不自駕</p></div><div class="actions"><a class="icon-button" href="index.html">← 旅程總覽</a><button class="icon-button" id="printBtn" type="button">列印</button><button class="icon-button" id="compactBtn" type="button" aria-pressed="false">精簡</button></div></div></header>
+<main class="layout"><aside class="sidebar" aria-label="行程摘要"><section class="panel"><h2>航班與住宿</h2><div class="flight-card"><div class="flight-row"><strong>去程 CI132</strong><span>10/28 高雄 15:50<br>→ 那霸 18:30</span></div><div class="flight-row"><strong>回程 CI133</strong><span>11/1 那霸 19:30<br>→ 高雄 20:25</span></div></div><p>時間為各地當地時間；日本比台灣快 1 小時。航班依提供資料，出發前核對訂位紀錄。</p><h3>Hotel Torifito Naha Asahibashi</h3><p>10/28 入住 → 11/1 退房，共 4 晚。以旭橋與那霸巴士總站為移動起點。</p><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Torifito%20Naha%20Asahibashi" target="_blank" rel="noopener">Google Maps</a></section><section class="panel"><h2>每日快速跳轉</h2><nav class="day-nav" aria-label="日期"><a class="day-tab" href="#day1">10/28 週三 · 抵達沖繩</a><a class="day-tab" href="#day2">10/29 週四 · 美麗海水族館＋海洋博公園</a><a class="day-tab" href="#day3">10/30 週五 · 首里城 → 牧志市場 → 國際通</a><a class="day-tab" href="#day4">10/31 週六 · 美國村夕陽＋Halloween＋夜景</a><a class="day-tab" href="#day5">11/1 週日 · 豐崎 iias＋AEON → 回高雄</a></nav></section><section class="panel warning"><h2>出發前待確認</h2><ul><li>10/29 那霸 ↔ 美麗海路線、站點、班次與預約。</li><li>10/31 美國村煙火是否施放、Halloween 管制與回旭橋末班交通。</li><li>11/1 寄物方式、置物櫃尺寸與機場交通。</li><li>首里城開放區域、園區設施與商場營業時間。</li></ul><p>建議出發前一週確認交通與活動；所有移動時段均為規劃估計。</p></section></aside>
+<section class="main"><section class="ocean"><p>OKINAWA · 5 DAYS / 4 NIGHTS</p><h2>海洋、夕陽與那霸慢遊</h2><p>一天美麗海、一天美國村夜景，再留完整時間給首里城、國際通與豐崎購物。</p><p>四晚同一間飯店，搭單軌與巴士移動。</p></section><section class="panel warning"><h2>行程資料說明</h2><p>依你提供的行程整理，尚未另行查證即時資訊。美麗海 08:30–18:30（17:30 最後入館）、iias 商場 10:00–21:00、AEON STYLE 09:00–22:00 均為原稿參考時間，實際以出發時公告為準。煙火與巴士時段不是已確認預訂。</p></section><section class="panel"><div class="section-title"><div><h2>行程時間軸</h2><p>可依類別篩選，或使用每日快速跳轉。</p></div></div><div class="filters" aria-label="行程分類"><button class="filter-chip active" type="button" data-filter="all" aria-pressed="true">全部</button><button class="filter-chip" type="button" data-filter="flight" aria-pressed="false">交通</button><button class="filter-chip" type="button" data-filter="hotel" aria-pressed="false">住宿／行李</button><button class="filter-chip" type="button" data-filter="food" aria-pressed="false">餐飲</button><button class="filter-chip" type="button" data-filter="sight" aria-pressed="false">景點</button><button class="filter-chip" type="button" data-filter="shopping" aria-pressed="false">購物</button></div><div class="timeline"><article class="day" id="day1"><div class="day-header"><h3>第 1 天 · 10/28 週三</h3><span>抵達沖繩</span></div><div class="events"><div class="event" data-kind="flight"><div class="time">15:50–18:30</div><div><h4>CI132 高雄 → 那霸</h4><p>依提供的航班：15:50 高雄起飛、18:30 抵達那霸。航班時間均為當地時間。</p><div class="tags"><span class="tag flight">交通</span></div></div></div><div class="event" data-kind="flight"><div class="time">18:30–20:00</div><div><h4>入境、領行李、前往旭橋</h4><p>預估 19:20–19:40 完成入境與領行李，再搭 Yui Rail：那霸空港站 → 旭橋站，步行至飯店。</p><div class="tags"><span class="tag flight">交通</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Asahibashi%20Station%20Okinawa" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="hotel"><div class="time">20:00–20:30</div><div><h4>入住 Hotel Torifito Naha Asahibashi</h4><p>四晚住同一間飯店；第一晚不安排正式景點。抵達時間視入境與交通狀況調整。</p><div class="tags"><span class="tag hotel">住宿／行李</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Torifito%20Naha%20Asahibashi" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="food"><div class="time">20:30 起</div><div><h4>旭橋附近晚餐、便利商店補給</h4><p>在旭橋／那霸巴士總站附近用餐，買水、早餐、飲料與零食，早點休息。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div></div></article><article class="day" id="day2"><div class="day-header"><h3>第 2 天 · 10/29 週四</h3><span>美麗海水族館＋海洋博公園</span></div><div class="events"><div class="event" data-kind="food"><div class="time">06:30–07:00</div><div><h4>起床、早餐</h4><p>飯店或便利商店簡單吃，今天是整趟最早起的一天。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div><div class="event" data-kind="flight"><div class="time">07:00–07:30</div><div><h4>出發前往海洋博公園</h4><p>飯店步行至那霸巴士總站，搭往本部／海洋博公園方向巴士。此為預留時段，路線、上車站、預約方式與實際班次待確認。</p><div class="tags"><span class="tag flight">交通</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Naha%20Bus%20Terminal" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="sight"><div class="time">09:30–12:00</div><div><h4>美麗海水族館</h4><p>預估 09:30–10:00 抵達。珊瑚之海 → 熱帶魚之海 → 黑潮之海與鯨鯊 → 深海區；黑潮之海多留時間。不加古宇利島、萬座毛或一日團。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Okinawa%20Churaumi%20Aquarium" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="food"><div class="time">12:00–13:00</div><div><h4>園區午餐</h4><p>直接在園區吃飯，不為名店離開園區。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div><div class="event" data-kind="sight"><div class="time">13:00–15:30</div><div><h4>海豚、海龜館、海牛館</h4><p>依當日開放與活動場次安排。若想再進水族館，先確認當日再入館規定並保留票券。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Ocean%20Expo%20Park%20Okinawa" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="sight"><div class="time">15:30–16:30</div><div><h4>翡翠海灘</h4><p>天氣好就散步、拍照、休息；依回程班次縮短或調整。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Emerald%20Beach%20Okinawa" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="flight"><div class="time">16:30–17:00</div><div><h4>準備搭車回那霸</h4><p>以確認後的回程班次為準，不等水族館關門才找車。預估 19:00–20:00 回到旭橋。</p><div class="tags"><span class="tag flight">交通</span></div></div></div><div class="event" data-kind="food"><div class="time">19:00–20:00 起</div><div><h4>旭橋附近晚餐</h4><p>回到那霸後就近吃晚餐、休息。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div></div></article><article class="day" id="day3"><div class="day-header"><h3>第 3 天 · 10/30 週五</h3><span>首里城 → 牧志市場 → 國際通</span></div><div class="events"><div class="event" data-kind="flight"><div class="time">08:30–09:30</div><div><h4>旭橋 → 首里</h4><p>步行至旭橋站，搭 Yui Rail 至首里站，再步行或轉乘前往首里城。</p><div class="tags"><span class="tag flight">交通</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Shuri%20Station%20Okinawa" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="sight"><div class="time">09:30–12:00</div><div><h4>首里城開放區域</h4><p>預留 2–2.5 小時。依提供資料，復原正殿內部預計 2026/11/23 開放，本次不安排入內；開放日期與可參觀區域仍待官方確認。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Shurijo%20Castle" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="food"><div class="time">12:00–13:00</div><div><h4>移動至牧志、午餐</h4><p>由首里搭 Yui Rail 至牧志，再進入國際通區域吃午餐。</p><div class="tags"><span class="tag food">餐飲</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Makishi%20Station" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="shopping"><div class="time">13:00–18:00</div><div><h4>牧志市場與國際通購物</h4><p>牧志站 → 國際通東段 → 第一牧志公設市場 → 市場本通 → 平和通商店街 → 回國際通，沿路往縣廳前方向逛。各店營業時間不同。</p><div class="tags"><span class="tag shopping">購物</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Makishi%20Public%20Market" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="food"><div class="time">18:00–19:00</div><div><h4>國際通晚餐</h4><p>直接在國際通用餐，吃完繼續逛。</p><div class="tags"><span class="tag food">餐飲</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Naha%20Kokusai%20Dori" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="shopping"><div class="time">19:00–20:30</div><div><h4>國際通夜間購物</h4><p>下午到晚上保留約 7–8 小時，一路由東往西、朝飯店方向移動。</p><div class="tags"><span class="tag shopping">購物</span></div></div></div><div class="event" data-kind="hotel"><div class="time">20:30–21:00</div><div><h4>回飯店</h4><p>整理戰利品，隔天上午可以睡晚一點。</p><div class="tags"><span class="tag hotel">住宿／行李</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Hotel%20Torifito%20Naha%20Asahibashi" target="_blank" rel="noopener">Google Maps</a></div></div></div></div></article><article class="day" id="day4"><div class="day-header"><h3>第 4 天 · 10/31 週六</h3><span>美國村夕陽＋Halloween＋夜景</span></div><div class="events"><div class="event" data-kind="food"><div class="time">09:00–11:00</div><div><h4>悠閒早餐</h4><p>睡到自然醒，上午可在飯店附近散步。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div><div class="event" data-kind="flight"><div class="time">11:30–13:00</div><div><h4>那霸 → 北谷美國村</h4><p>約 11:30–12:00 從旭橋／那霸巴士總站附近出發，預估 13:00 抵達。路線、站點與 Halloween 交通調整待確認。</p><div class="tags"><span class="tag flight">交通</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=American%20Village%20Okinawa" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="food"><div class="time">13:00–14:00</div><div><h4>美國村午餐</h4><p>先吃午餐，再慢慢逛街。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div><div class="event" data-kind="shopping"><div class="time">14:00–17:00</div><div><h4>美國村午後逛街</h4><p>Depot Island → American Depot → 海邊商店、咖啡廳與小店，保留隨興散步的時間。</p><div class="tags"><span class="tag shopping">購物</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Depot%20Island%20Okinawa" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="sight"><div class="time">17:00–18:00</div><div><h4>海邊夕陽</h4><p>往 Depot Island Boardwalk／Sunset Beach 一帶走，視天氣與當日日落時間調整。</p><div class="tags"><span class="tag sight">景點</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Sunset%20Beach%20Chatan" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="food"><div class="time">18:00–19:30</div><div><h4>晚餐與點燈夜景</h4><p>天黑後繼續看美國村夜景與 Halloween 氣氛；當年活動與交通管制待公告確認。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div><div class="event" data-kind="sight"><div class="time">20:00 暫留</div><div><h4>煙火：未確認，非固定場次</h4><p>保留觀賞彈性，10/31 是否施放尚未確認。即使沒有煙火，也以 Halloween 與夜景為主；不要為等煙火錯過回程。</p><div class="tags"><span class="tag sight">景點</span></div></div></div><div class="event" data-kind="flight"><div class="time">20:15–21:00</div><div><h4>準備返回那霸</h4><p>此為規劃時段，不代表當時一定有車。出發前確認末班、站點及管制；若可搭班次更早，提前結束行程。</p><div class="tags"><span class="tag flight">交通</span></div></div></div></div></article><article class="day" id="day5"><div class="day-header"><h3>第 5 天 · 11/1 週日</h3><span>豐崎 iias＋AEON → 回高雄</span></div><div class="events"><div class="event" data-kind="food"><div class="time">08:30–10:00</div><div><h4>早餐、整理行李</h4><p>確認戰利品重量，完成打包。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div><div class="event" data-kind="hotel"><div class="time">10:00–11:00</div><div><h4>退房與行李安排</h4><p>方案 A：先寄放飯店，購物後回旭橋拿行李。方案 B：確認 iias 置物櫃尺寸與可用性後，帶行李去寄物，再直達機場。</p><div class="tags"><span class="tag hotel">住宿／行李</span></div></div></div><div class="event" data-kind="flight"><div class="time">11:00–12:00</div><div><h4>前往豐崎</h4><p>前往 iias 沖繩豐崎／AEON STYLE 豐崎。實際路線與班次待確認；機場出發的車程不能直接套用旭橋出發。</p><div class="tags"><span class="tag flight">交通</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=iias%20Okinawa%20Toyosaki" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="food"><div class="time">12:00–13:00</div><div><h4>iias 午餐</h4><p>直接在商場內用餐。</p><div class="tags"><span class="tag food">餐飲</span></div></div></div><div class="event" data-kind="shopping"><div class="time">13:00–15:00</div><div><h4>iias 沖繩豐崎</h4><p>服飾、生活用品、雜貨與伴手禮。不安排 DMM 水族館。</p><div class="tags"><span class="tag shopping">購物</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=iias%20Okinawa%20Toyosaki" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="shopping"><div class="time">15:00–16:00</div><div><h4>AEON STYLE 豐崎最後採買</h4><p>與 iias 同址，補日本零食、泡麵、飲料、調味料、日用品與沖繩伴手禮。若需折返飯店拿行李，依班次提早結束。</p><div class="tags"><span class="tag shopping">購物</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=AEON%20STYLE%20Toyosaki" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="flight"><div class="time">16:00 前後</div><div><h4>離開豐崎、領行李、前往機場</h4><p>飯店寄物：豐崎 → 旭橋 → 飯店拿行李 → 那霸機場；商場寄物：取行李後直達機場。以 17:00–17:30 到機場為目標倒推，必要時提前離開。</p><div class="tags"><span class="tag flight">交通</span><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Naha%20Airport" target="_blank" rel="noopener">Google Maps</a></div></div></div><div class="event" data-kind="flight"><div class="time">17:00–17:30</div><div><h4>抵達那霸機場</h4><p>辦理報到、托運、安檢與出境，保留約兩小時；完成手續後再做最後採買。</p><div class="tags"><span class="tag flight">交通</span></div></div></div><div class="event" data-kind="flight"><div class="time">19:30–20:25</div><div><h4>CI133 那霸 → 高雄</h4><p>依提供的航班：19:30 那霸起飛，20:25 抵達高雄（當地時間）。</p><div class="tags"><span class="tag flight">交通</span></div></div></div></div></article></div></section></section></main></div>
+<script>
+const filterButtons = document.querySelectorAll('.filter-chip');
+function filterEvents(filter) {
+ filterButtons.forEach(button => {const active=button.dataset.filter===filter; button.classList.toggle('active',active); button.setAttribute('aria-pressed',String(active));});
+ document.querySelectorAll('.event').forEach(event => event.hidden=filter!=='all' && event.dataset.kind!==filter);
+}
+filterButtons.forEach(button => button.addEventListener('click',()=>filterEvents(button.dataset.filter)));
+document.querySelectorAll('.day-tab').forEach(link=>link.addEventListener('click',()=>filterEvents('all')));
+document.getElementById('compactBtn').addEventListener('click',function() {const compact=this.getAttribute('aria-pressed')!=='true'; this.setAttribute('aria-pressed',String(compact)); document.querySelectorAll('.event p, .event .tags').forEach(node=>node.hidden=compact); this.textContent=compact?'詳細':'精簡';});
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+</script></body></html>
